@@ -227,7 +227,71 @@ input:checked+.toggle-slider:before{transform:translateX(20px)}
 <body>
 <div id="app">
 
-<!-- ═══ DASHBOARD ═══ -->
+<!-- ═══ TELA DE AUTENTICAÇÃO ═══ -->
+<div id="auth-screen" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:24px">
+  <!-- Logo -->
+  <div style="text-align:center;margin-bottom:36px">
+    <div style="width:72px;height:72px;background:linear-gradient(135deg,#10B981,#065F46);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(16,185,129,.3)">💰</div>
+    <h1 style="font-size:26px;font-weight:900;letter-spacing:-.5px">FinançasPRO</h1>
+    <p style="font-size:13px;color:var(--t3);margin-top:4px">Gestão financeira pessoal</p>
+  </div>
+
+  <!-- Tabs login/cadastro -->
+  <div style="display:flex;background:var(--bg2);border-radius:14px;padding:4px;margin-bottom:24px;width:100%;max-width:360px">
+    <button id="tab-auth-login" onclick="authSetModo('login')" style="flex:1;padding:10px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;background:linear-gradient(135deg,var(--gl),var(--green));color:#fff;transition:.2s">Entrar</button>
+    <button id="tab-auth-cad" onclick="authSetModo('cadastro')" style="flex:1;padding:10px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;background:none;color:var(--t3);transition:.2s">Criar conta</button>
+  </div>
+
+  <div style="width:100%;max-width:360px">
+
+    <!-- BLOCO LOGIN -->
+    <div id="auth-login-block">
+      <div style="margin-bottom:14px">
+        <label style="display:block;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">E-mail</label>
+        <input id="auth-email" type="email" placeholder="seu@email.com" onkeydown="authEnter(event,authLogin)"
+          style="width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;color:var(--text);font-size:16px;font-family:Inter,sans-serif;outline:none">
+      </div>
+      <div style="margin-bottom:20px">
+        <label style="display:block;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Senha</label>
+        <input id="auth-senha" type="password" placeholder="••••••••" onkeydown="authEnter(event,authLogin)"
+          style="width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;color:var(--text);font-size:16px;font-family:Inter,sans-serif;outline:none">
+      </div>
+      <button onclick="authLogin()" style="width:100%;padding:15px;background:linear-gradient(135deg,var(--gl),var(--green));border:none;border-radius:var(--rs);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:.5px">Entrar</button>
+    </div>
+
+    <!-- BLOCO CADASTRO -->
+    <div id="auth-cad-block" style="display:none">
+      <div style="margin-bottom:14px">
+        <label style="display:block;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Nome</label>
+        <input id="cad-nome" type="text" placeholder="Seu nome" onkeydown="authEnter(event,authCadastro)"
+          style="width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;color:var(--text);font-size:16px;font-family:Inter,sans-serif;outline:none">
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="display:block;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">E-mail</label>
+        <input id="cad-email" type="email" placeholder="seu@email.com" onkeydown="authEnter(event,authCadastro)"
+          style="width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;color:var(--text);font-size:16px;font-family:Inter,sans-serif;outline:none">
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="display:block;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Senha (mín. 6 caracteres)</label>
+        <input id="cad-senha" type="password" placeholder="••••••••" onkeydown="authEnter(event,authCadastro)"
+          style="width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;color:var(--text);font-size:16px;font-family:Inter,sans-serif;outline:none">
+      </div>
+      <div style="margin-bottom:20px">
+        <label style="display:block;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Confirmar Senha</label>
+        <input id="cad-conf" type="password" placeholder="••••••••" onkeydown="authEnter(event,authCadastro)"
+          style="width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;color:var(--text);font-size:16px;font-family:Inter,sans-serif;outline:none">
+      </div>
+      <button onclick="authCadastro()" style="width:100%;padding:15px;background:linear-gradient(135deg,var(--gl),var(--green));border:none;border-radius:var(--rs);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:.5px">Criar Conta</button>
+    </div>
+
+    <!-- Erro -->
+    <div id="auth-erro" style="text-align:center;color:var(--rl);font-size:13px;font-weight:600;margin-top:14px;min-height:20px"></div>
+
+    <p style="text-align:center;font-size:11px;color:var(--t4);margin-top:20px;line-height:1.6">🔒 Seus dados ficam salvos neste dispositivo.<br>Cada conta é isolada e privada.</p>
+  </div>
+</div>
+
+
 <div class="screen" id="screen-home">
   <div class="topbar">
     <div class="topbar-left">
@@ -375,8 +439,16 @@ input:checked+.toggle-slider:before{transform:translateX(20px)}
 <div class="screen" id="screen-config" style="display:none">
   <div class="topbar"><div class="topbar-left"><h3>Conta</h3><h1>Configurações</h1></div></div>
   <div style="margin:0 24px;display:flex;flex-direction:column;gap:14px;padding-bottom:24px">
+    <!-- Card usuário logado -->
+    <div style="background:linear-gradient(135deg,#10B981,#065F46);border-radius:var(--r);padding:18px;display:flex;align-items:center;gap:14px">
+      <div id="cfg-avatar" style="width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0;backdrop-filter:blur(4px)"></div>
+      <div style="flex:1;min-width:0">
+        <div id="cfg-user-nome" style="font-size:16px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+        <div id="cfg-user-email" style="font-size:12px;color:rgba(255,255,255,.7);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+      </div>
+    </div>
     <div class="form-group">
-      <label>Seu Nome</label>
+      <label>Nome de Exibição</label>
       <input type="text" id="cfg-nome" placeholder="Como quer ser chamado?" oninput="salvarConfig()">
     </div>
     <div class="form-group">
@@ -392,9 +464,10 @@ input:checked+.toggle-slider:before{transform:translateX(20px)}
       <input type="number" id="cfg-saldo-inicial" placeholder="Ex: 5000" oninput="salvarConfig()">
     </div>
     <div style="height:1px;background:var(--border)"></div>
-    <div style="font-size:11px;color:var(--t4);text-align:center;padding:6px 0">FinançasPRO Premium v3.0 PWA • Dados salvos localmente</div>
+    <div style="font-size:11px;color:var(--t4);text-align:center;padding:6px 0">FinançasPRO Premium v3.0 PWA • Dados isolados por conta</div>
     <button id="btn-instalar" onclick="instalarPWA()" style="background:var(--bd);border:1px solid rgba(59,130,246,.3);border-radius:var(--rs);padding:13px;color:var(--blue);font-size:14px;font-weight:600;cursor:pointer;width:100%;font-family:Inter,sans-serif;display:none">📲 Instalar no Celular</button>
-    <button onclick="if(confirm('Apagar TODOS os dados?')){localStorage.removeItem('finpro_v3');location.reload()}" style="background:var(--rd);border:1px solid rgba(239,68,68,.3);border-radius:var(--rs);padding:13px;color:var(--rl);font-size:14px;font-weight:600;cursor:pointer;width:100%;font-family:Inter,sans-serif">🗑 Apagar todos os dados</button>
+    <button onclick="fazerLogout()" style="background:var(--ad);border:1px solid rgba(245,158,11,.3);border-radius:var(--rs);padding:13px;color:var(--amber);font-size:14px;font-weight:600;cursor:pointer;width:100%;font-family:Inter,sans-serif">🚪 Sair da Conta</button>
+    <button onclick="if(confirm('Apagar TODOS os seus dados? Irreversível!')){localStorage.removeItem(SK_ATUAL);S={lancamentos:[],fixos:[],cartoes:[],metas:[],planejamento:{fixas:50,lazer:10,alimentacao:15,transporte:10,saude:5,educacao:5,viagem:5,investimentos:10,metas:10},config:{nome:'',renda:0,orcamento:0,saldoInicial:0}};renderDashboard();toast('Dados apagados');goScreen('screen-home')}" style="background:var(--rd);border:1px solid rgba(239,68,68,.3);border-radius:var(--rs);padding:13px;color:var(--rl);font-size:14px;font-weight:600;cursor:pointer;width:100%;font-family:Inter,sans-serif">🗑 Apagar meus dados</button>
   </div>
 </div>
 
@@ -1482,6 +1555,13 @@ function carregarConfig() {
   document.getElementById('cfg-renda').value=S.config.renda||'';
   document.getElementById('cfg-orcamento').value=S.config.orcamento||'';
   document.getElementById('cfg-saldo-inicial').value=S.config.saldoInicial||'';
+  // Card do usuário logado
+  if(usuarioAtual) {
+    const ini=usuarioAtual.nome.charAt(0).toUpperCase();
+    document.getElementById('cfg-avatar').textContent=ini;
+    document.getElementById('cfg-user-nome').textContent=usuarioAtual.nome;
+    document.getElementById('cfg-user-email').textContent=usuarioAtual.email;
+  }
   if(deferredPrompt) document.getElementById('btn-instalar').style.display='block';
 }
 function salvarConfig() {
@@ -1577,17 +1657,142 @@ function instalarPWA() {
 }
 
 // ═══════════════════════════════════════════════
+// SISTEMA DE AUTENTICAÇÃO MULTI-USUÁRIO
+// ═══════════════════════════════════════════════
+const AUTH = {
+  USERS_KEY: 'finpro_users',
+  SESSION_KEY: 'finpro_session',
+
+  // Retorna todos os usuários cadastrados
+  getUsers() {
+    try { return JSON.parse(localStorage.getItem(this.USERS_KEY)||'{}'); } catch(e){return{};}
+  },
+  saveUsers(users) { localStorage.setItem(this.USERS_KEY, JSON.stringify(users)); },
+
+  // Hash simples (não criptografia real, mas impede leitura direta)
+  hash(str) {
+    let h=0;
+    for(let i=0;i<str.length;i++){h=Math.imul(31,h)+str.charCodeAt(i)|0;}
+    return Math.abs(h).toString(36)+str.length.toString(36);
+  },
+
+  // Sessão atual
+  getSession() {
+    try { return JSON.parse(sessionStorage.getItem(this.SESSION_KEY)||'null'); } catch(e){return null;}
+  },
+  setSession(user) { sessionStorage.setItem(this.SESSION_KEY, JSON.stringify(user)); },
+  clearSession() { sessionStorage.removeItem(this.SESSION_KEY); },
+
+  // Chave de dados isolada por usuário
+  dataKey(email) { return 'finpro_data_'+this.hash(email); },
+
+  // Cadastro
+  register(nome, email, senha) {
+    if(!nome||!email||!senha) return {ok:false,msg:'Preencha todos os campos'};
+    if(!email.includes('@')) return {ok:false,msg:'E-mail inválido'};
+    if(senha.length<6) return {ok:false,msg:'Senha mínima: 6 caracteres'};
+    const users=this.getUsers();
+    if(users[email]) return {ok:false,msg:'E-mail já cadastrado'};
+    users[email]={nome, email, hash:this.hash(senha), criadoEm:new Date().toISOString()};
+    this.saveUsers(users);
+    return {ok:true};
+  },
+
+  // Login
+  login(email, senha) {
+    const users=this.getUsers();
+    const u=users[email];
+    if(!u) return {ok:false,msg:'E-mail não encontrado'};
+    if(u.hash!==this.hash(senha)) return {ok:false,msg:'Senha incorreta'};
+    this.setSession({nome:u.nome,email:u.email});
+    return {ok:true,user:{nome:u.nome,email:u.email}};
+  },
+
+  // Logout
+  logout() {
+    this.clearSession();
+    location.reload();
+  },
+
+  // Init — decide se mostra login ou app
+  init() {
+    const session=this.getSession();
+    if(session) {
+      // Usuário logado — carrega dados dele
+      SK_ATUAL = this.dataKey(session.email);
+      usuarioAtual = session;
+      document.getElementById('auth-screen').style.display='none';
+      document.getElementById('app').style.display='flex';
+      carregar();
+      const fm=document.getElementById('filtro-mes');
+      if(fm)fm.value=mesAtual();
+      renderDashboard();
+    } else {
+      document.getElementById('auth-screen').style.display='flex';
+      document.getElementById('app').style.display='none';
+    }
+  }
+};
+
+// Variáveis globais de sessão
+let SK_ATUAL = 'finpro_v3'; // sobrescrito após login
+let usuarioAtual = null;
+
+// Sobrescreve carregar/salvar para usar chave do usuário logado
+function carregar() {
+  try { const r=localStorage.getItem(SK_ATUAL); if(r) S={...S,...JSON.parse(r)}; } catch(e){}
+}
+function salvar() { localStorage.setItem(SK_ATUAL, JSON.stringify(S)); }
+
+// ── UI AUTH ──────────────────────────────────────
+let authModo = 'login'; // 'login' | 'cadastro'
+
+function authSetModo(modo) {
+  authModo=modo;
+  document.getElementById('auth-login-block').style.display=modo==='login'?'block':'none';
+  document.getElementById('auth-cad-block').style.display=modo==='cadastro'?'block':'none';
+  document.getElementById('auth-erro').textContent='';
+}
+
+function authLogin() {
+  const email=document.getElementById('auth-email').value.trim().toLowerCase();
+  const senha=document.getElementById('auth-senha').value;
+  const r=AUTH.login(email,senha);
+  if(!r.ok){document.getElementById('auth-erro').textContent=r.msg;return;}
+  AUTH.init();
+}
+
+function authCadastro() {
+  const nome=document.getElementById('cad-nome').value.trim();
+  const email=document.getElementById('cad-email').value.trim().toLowerCase();
+  const senha=document.getElementById('cad-senha').value;
+  const conf=document.getElementById('cad-conf').value;
+  if(senha!==conf){document.getElementById('auth-erro').textContent='As senhas não coincidem';return;}
+  const r=AUTH.register(nome,email,senha);
+  if(!r.ok){document.getElementById('auth-erro').textContent=r.msg;return;}
+  // Login automático após cadastro
+  AUTH.login(email,senha);
+  AUTH.init();
+  toast(`🎉 Bem-vindo(a), ${nome}!`);
+}
+
+// Tecla Enter nos campos
+function authEnter(e,fn) { if(e.key==='Enter') fn(); }
+
+// ── LOGOUT no menu config ──
+function fazerLogout() {
+  if(confirm(`Sair da conta ${usuarioAtual?.email}?`)) AUTH.logout();
+}
+
 // INIT
 // ═══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
-  carregar();
   setupPWA();
+  AUTH.init();
   const fm=document.getElementById('filtro-mes');
   if(fm)fm.value=mesAtual();
-  // listeners parcela
   document.getElementById('lanc-valor').addEventListener('input',atualizarCalcParcela);
   document.getElementById('lanc-parcelas').addEventListener('change',atualizarCalcParcela);
-  renderDashboard();
 });
 </script>
 </body>
